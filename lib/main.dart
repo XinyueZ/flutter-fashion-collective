@@ -4,7 +4,7 @@ import 'package:flutter_fashion_collective/config.dart';
 import 'package:provider/provider.dart';
 
 import 'blocs/categories_provider.dart';
-import 'widgets/products_list_widget.dart';
+import 'widgets/categories_list_widget.dart';
 
 void main() => runApp(MyApp());
 
@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         home: Material(
-          child: ProductsListWidget(),
+          child: CategoriesListWidget(),
         ),
       ),
     );

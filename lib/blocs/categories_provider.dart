@@ -31,8 +31,6 @@ class CategoriesProvider extends ChangeNotifier {
     _categoriesStreamController.add(listOfCategory);
 
     notifyListeners();
-    debugPrint("$count");
-    debugPrint("$listOfCategory");
   }
 
   @override
