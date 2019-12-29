@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_fashion_collective/blocs/client_provider.dart';
+import 'package:flutter_fashion_collective/blocs/products_provider.dart';
 import 'package:flutter_fashion_collective/config.dart';
+import 'package:flutter_fashion_collective/widgets/products_list_widget.dart';
 import 'package:provider/provider.dart';
 
 import 'blocs/categories_provider.dart';
@@ -24,6 +26,15 @@ class MyApp extends StatelessWidget {
             categoriesProvider.loadCategories();
             return categoriesProvider;
           },
+        ),
+        ChangeNotifierProxyProvider<ClientProvider, ProductsProvider>(
+          create: (context) => ProductsProvider(),
+          update: (context, ClientProvider clientProvider,
+              ProductsProvider productsProvider) {
+            productsProvider.dio = clientProvider.dio;
+            productsProvider.loadProducts(cat: "men");
+            return productsProvider;
+          },
         )
       ],
       child: MaterialApp(
@@ -32,7 +43,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         home: Material(
-          child: CategoriesListWidget(),
+          child: ProductsListWidget(), //CategoriesListWidget(),
         ),
       ),
     );
