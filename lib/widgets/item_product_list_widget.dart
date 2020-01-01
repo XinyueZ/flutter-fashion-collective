@@ -56,21 +56,23 @@ class _ItemProductListWidgetState extends State<ItemProductListWidget> {
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      Container(
-                        margin: EdgeInsets.only(right: 5),
-                        child: Align(
-                          alignment: Alignment.centerRight,
-                          child: widget.product.inStock
+                      Row(
+                        children: <Widget>[
+                          widget.product.inStock
                               ? Image.asset(
-                                  'assets/icons/ic_in_stock.png',
-                                  width: 25,
-                                  height: 25,
-                                )
-                              : Icon(
-                                  Icons.close,
-                                  color: Colors.red,
-                                ),
-                        ),
+                            'assets/icons/ic_in_stock.png',
+                            width: 25,
+                            height: 25,
+                          )
+                              : Container(),
+                          widget.product.isPromotionalDeal
+                              ? Image.asset(
+                            'assets/icons/ic_promotional.png',
+                            width: 25,
+                            height: 25,
+                          )
+                              : Container(),
+                        ],
                       ),
                     ],
                   )

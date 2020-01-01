@@ -10,14 +10,24 @@ class Product {
   final Uri clickUrl;
   final Uri thumbnail;
   final String seeMoreLabel;
+  final bool isPromotionalDeal;
 
-  Product(this.id, this.brandedName, this.unbrandedName, this.priceLabel,
-      this.inStock, this.description, this.clickUrl, this.thumbnail, this.seeMoreLabel);
+  Product(
+      this.id,
+      this.brandedName,
+      this.unbrandedName,
+      this.priceLabel,
+      this.inStock,
+      this.description,
+      this.clickUrl,
+      this.thumbnail,
+      this.seeMoreLabel,
+      this.isPromotionalDeal);
 
   @override
   String toString() {
     String toString = sprintf(
-        """id: %s, brandedName: %s, unbrandedName: %s, priceLabel: %s, inStock: %s, description: %s, clickUrl: %s, thumbnail: %s, seeMoreLabel: %s""",
+        """id: %s, brandedName: %s, unbrandedName: %s, priceLabel: %s, inStock: %s, description: %s, clickUrl: %s, thumbnail: %s, seeMoreLabel: %s, isPromotionalDeal: %s""",
         [
           id.toString(),
           brandedName,
@@ -27,7 +37,8 @@ class Product {
           description,
           clickUrl.toString(),
           thumbnail.toString(),
-          seeMoreLabel
+          seeMoreLabel,
+          isPromotionalDeal.toString()
         ]);
     return toString;
   }
