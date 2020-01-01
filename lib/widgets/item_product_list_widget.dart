@@ -19,8 +19,8 @@ class _ItemProductListWidgetState extends State<ItemProductListWidget> {
         child: Row(
           children: <Widget>[
             Image(
-              width: 114.59,
-              height: 185.41,
+              width: 74.16,
+              height: 120,
               image: NetworkImage(widget.product.thumbnail.toString()),
             ),
             Expanded(
@@ -34,11 +34,14 @@ class _ItemProductListWidgetState extends State<ItemProductListWidget> {
                   ),
                   Container(
                     margin: EdgeInsets.only(top: 10, bottom: 10),
-                    child: Text(
-                      widget.product.description,
-                      maxLines: 4,
-                      style: Theme.of(context).textTheme.subtitle,
-                      overflow: TextOverflow.ellipsis,
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        widget.product.seeMoreLabel,
+                        maxLines: 4,
+                        style: Theme.of(context).textTheme.subtitle,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                   ),
                   Row(

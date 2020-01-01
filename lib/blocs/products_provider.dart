@@ -33,9 +33,10 @@ class ProductsProvider extends ChangeNotifier {
       final String description = x["description"];
       final Uri clickUrl = Uri.parse(x["clickUrl"]);
       final Uri thumbnail = Uri.parse(x["image"]["sizes"]["IPhone"]["url"]);
+      final String seeMoreLabel = x["seeMoreLabel"];
 
       return Product(id, brandedName, unbrandedName, priceLabel, inStock,
-          description, clickUrl, thumbnail);
+          description, clickUrl, thumbnail, seeMoreLabel);
     }).toList();
 
     count = listOfProduct.length;
