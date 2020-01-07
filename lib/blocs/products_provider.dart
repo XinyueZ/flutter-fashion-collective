@@ -33,11 +33,24 @@ class ProductsProvider extends ChangeNotifier {
       final String description = x["description"];
       final Uri clickUrl = Uri.parse(x["clickUrl"]);
       final Uri thumbnail = Uri.parse(x["image"]["sizes"]["IPhone"]["url"]);
+      final Uri photoXLarge = Uri.parse(x["image"]["sizes"]["XLarge"]["url"]);
+      final num photoXLargeHeight = x["image"]["sizes"]["XLarge"]["height"];
       final String seeMoreLabel = x["seeMoreLabel"];
       final bool isPromotionalDeal = x["promotionalDeal"] != null;
 
-      return Product(id, brandedName, unbrandedName, priceLabel, inStock,
-          description, clickUrl, thumbnail, seeMoreLabel, isPromotionalDeal);
+      return Product(
+          id,
+          brandedName,
+          unbrandedName,
+          priceLabel,
+          inStock,
+          description,
+          clickUrl,
+          thumbnail,
+          photoXLarge,
+          photoXLargeHeight,
+          seeMoreLabel,
+          isPromotionalDeal);
     }).toList();
 
     count = listOfProduct.length;

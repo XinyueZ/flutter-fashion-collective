@@ -1,6 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_fashion_collective/domains/product.dart';
+
+import 'hero_transition_widget.dart';
+import 'product_detail_widget.dart';
 
 class ItemProductListWidget extends StatefulWidget {
   final Product product;
@@ -17,15 +21,24 @@ class _ItemProductListWidgetState extends State<ItemProductListWidget> {
     return Container(
       child: Card(
         child: Container(
-          margin: EdgeInsets.all(10),
+          margin: EdgeInsets.all(16),
           child: Row(
             children: <Widget>[
-              Image(
+              HeroTransitionWidget(
                 width: 74.16,
                 height: 120,
-                image: NetworkImage(widget.product.thumbnail.toString()),
+                tag: widget.product.thumbnail.toString(),
+                photo: widget.product.thumbnail.toString(),
+                onTap: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute<void>(builder: (BuildContext context) {
+                    return ProductDetailWidget(product: widget.product);
+                  }));
+                },
               ),
-              SizedBox(width: 15,),
+              SizedBox(
+                width: 15,
+              ),
               Expanded(
                 child: Column(
                   children: <Widget>[
@@ -63,17 +76,17 @@ class _ItemProductListWidgetState extends State<ItemProductListWidget> {
                           children: <Widget>[
                             widget.product.inStock
                                 ? Image.asset(
-                              'assets/icons/ic_in_stock.png',
-                              width: 25,
-                              height: 25,
-                            )
+                                    'assets/icons/ic_in_stock.png',
+                                    width: 25,
+                                    height: 25,
+                                  )
                                 : Container(),
                             widget.product.isPromotionalDeal
                                 ? Image.asset(
-                              'assets/icons/ic_promotional.png',
-                              width: 25,
-                              height: 25,
-                            )
+                                    'assets/icons/ic_promotional.png',
+                                    width: 25,
+                                    height: 25,
+                                  )
                                 : Container(),
                           ],
                         ),

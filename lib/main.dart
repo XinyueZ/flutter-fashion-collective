@@ -40,7 +40,9 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primaryColor: Colors.white,
+          accentColor: Colors.black,
+          backgroundColor: Colors.white,
         ),
         home: Material(
           child: ProductsListWidget(), //CategoriesListWidget(),
