@@ -20,29 +20,29 @@ class _CategoriesListWidgetState extends State<CategoriesListWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
+    return StreamBuilder<List<ProductCategory>>(
         stream: _categoriesProvider.categoriesStream,
         builder: (BuildContext context,
             AsyncSnapshot<List<ProductCategory>> snapshot) {
           if (snapshot.hasData) {
             return GridView.builder(
-                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                  childAspectRatio:2.5 ,
+                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                    childAspectRatio: 2.5,
                     crossAxisSpacing: 10,
                     mainAxisSpacing: 10,
                     maxCrossAxisExtent: 150),
                 itemCount: snapshot.data.length,
-                itemBuilder: (context, index) {
+                itemBuilder: (BuildContext context, int index) {
                   return ChoiceChip(
                     selected: false,
                     label: Text(snapshot.data[index].id),
                     elevation: 2,
-                    labelStyle: Theme.of(context).textTheme.subhead,
+                    labelStyle: Theme.of(context).textTheme.subtitle1,
                   );
                 });
           }
 
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         });
   }
 }

@@ -12,6 +12,7 @@ class HeroTransitionWidget extends StatelessWidget {
   final double height;
   final String tag;
 
+  @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: width,

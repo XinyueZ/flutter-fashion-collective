@@ -4,9 +4,9 @@ import 'package:flutter_fashion_collective/blocs/products_provider.dart';
 import 'package:flutter_fashion_collective/config.dart';
 import 'package:flutter_fashion_collective/widgets/products_list_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:provider/single_child_widget.dart';
 
 import 'blocs/categories_provider.dart';
-import 'widgets/categories_list_widget.dart';
 
 void main() => runApp(MyApp());
 
@@ -15,12 +15,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
+      providers: <SingleChildWidget>[
         ChangeNotifierProvider<ClientProvider>.value(
             value: ClientProvider(API_KEY)),
         ChangeNotifierProxyProvider<ClientProvider, CategoriesProvider>(
-          create: (context) => CategoriesProvider(),
-          update: (context, ClientProvider clientProvider,
+          create: (BuildContext context) => CategoriesProvider(),
+          update: (BuildContext context, ClientProvider clientProvider,
               CategoriesProvider categoriesProvider) {
             categoriesProvider.dio = clientProvider.dio;
             categoriesProvider.loadCategories();
@@ -28,8 +28,8 @@ class MyApp extends StatelessWidget {
           },
         ),
         ChangeNotifierProxyProvider<ClientProvider, ProductsProvider>(
-          create: (context) => ProductsProvider(),
-          update: (context, ClientProvider clientProvider,
+          create: (BuildContext context) => ProductsProvider(),
+          update: (BuildContext context, ClientProvider clientProvider,
               ProductsProvider productsProvider) {
             productsProvider.dio = clientProvider.dio;
             productsProvider.loadProducts(cat: "men");

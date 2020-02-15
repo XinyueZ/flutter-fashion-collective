@@ -5,10 +5,9 @@ import 'package:flutter_fashion_collective/domains/product.dart';
 import 'hero_transition_widget.dart';
 
 class ProductDetailWidget extends StatefulWidget {
-  final Product product;
-
   const ProductDetailWidget({Key key, this.product}) : super(key: key);
 
+  final Product product;
   @override
   _ProductDetailWidgetState createState() => _ProductDetailWidgetState();
 }
@@ -32,10 +31,10 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
             automaticallyImplyLeading: true,
             //title: Text(widget.product.seeMoreLabel), //标题
             centerTitle: false, //标题是否居中
-            actions: [Icon(Icons.more_vert)], //右侧的内容和点击事件啥的
+            actions: <Widget>[Icon(Icons.more_vert)], //右侧的内容和点击事件啥的
             elevation: 10, //阴影的高度
             forceElevated: true, //是否显示阴影
-            textTheme: TextTheme(), //字体样式
+            textTheme: const TextTheme(), //字体样式
             primary: true, // appbar是否显示在屏幕的最上面，为false是显示在最上面，为true就显示在状态栏的下面
             titleSpacing: 0.toDouble(), //标题两边的空白区域
             expandedHeight: widget.product.heightXLarge
@@ -47,7 +46,7 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
             flexibleSpace: FlexibleSpaceBar(
               title: Text(
                 widget.product.seeMoreLabel,
-                style: Theme.of(context).textTheme.title,
+                style: Theme.of(context).textTheme.headline6,
               ),
               collapseMode: CollapseMode.pin,
               centerTitle: false,
@@ -60,7 +59,8 @@ class _ProductDetailWidgetState extends State<ProductDetailWidget> {
           ),
           SliverFixedExtentList(
             itemExtent: 10.0,
-            delegate: SliverChildBuilderDelegate((context, index) {
+            delegate:
+                SliverChildBuilderDelegate((BuildContext context, int index) {
               return ListTile(
                 title: Text("List item $index"),
               );

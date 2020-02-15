@@ -1,6 +1,21 @@
+import 'package:flutter/widgets.dart';
 import 'package:sprintf/sprintf.dart';
 
+@immutable
 class Product {
+  const Product(
+      this.id,
+      this.brandedName,
+      this.unbrandedName,
+      this.priceLabel,
+      this.inStock,
+      this.description,
+      this.clickUrl,
+      this.thumbnail,
+      this.photoXLarge,
+      this.heightXLarge,
+      this.seeMoreLabel,
+      this.isPromotionalDeal);
   final num id;
   final String brandedName;
   final String unbrandedName;
@@ -14,25 +29,11 @@ class Product {
   final String seeMoreLabel;
   final bool isPromotionalDeal;
 
-  Product(
-      this.id,
-      this.brandedName,
-      this.unbrandedName,
-      this.priceLabel,
-      this.inStock,
-      this.description,
-      this.clickUrl,
-      this.thumbnail,
-      this.photoXLarge,
-      this.heightXLarge,
-      this.seeMoreLabel,
-      this.isPromotionalDeal);
-
   @override
   String toString() {
-    String toString = sprintf(
+    final String toString = sprintf(
         """id: %s, brandedName: %s, unbrandedName: %s, priceLabel: %s, inStock: %s, description: %s, clickUrl: %s, thumbnail: %s, xlarge: %s, x-large-height: %s, seeMoreLabel: %s, isPromotionalDeal: %s""",
-        [
+        <String>[
           id.toString(),
           brandedName,
           unbrandedName,
