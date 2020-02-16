@@ -1,42 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_fashion_collective/blocs/client_provider.dart';
-import 'package:flutter_fashion_collective/blocs/products_provider.dart';
-import 'package:flutter_fashion_collective/config.dart';
-import 'package:flutter_fashion_collective/widgets/products_list_widget.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_fashion_collective/feature/product_list/ui/product_list_page.dart';
+import 'package:flutter_fashion_collective/injection.dart';
 import 'package:provider/provider.dart';
-import 'package:provider/single_child_widget.dart';
 
-import 'blocs/categories_provider.dart';
+void main() {
+  Provider.debugCheckInvalidValueType = null;
+  runApp(FashionApp());
+}
 
-void main() => runApp(MyApp());
-
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+class FashionApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: <SingleChildWidget>[
-        ChangeNotifierProvider<ClientProvider>.value(
-            value: ClientProvider(API_KEY)),
-        ChangeNotifierProxyProvider<ClientProvider, CategoriesProvider>(
-          create: (BuildContext context) => CategoriesProvider(),
-          update: (BuildContext context, ClientProvider clientProvider,
-              CategoriesProvider categoriesProvider) {
-            categoriesProvider.dio = clientProvider.dio;
-            categoriesProvider.loadCategories();
-            return categoriesProvider;
-          },
-        ),
-        ChangeNotifierProxyProvider<ClientProvider, ProductsProvider>(
-          create: (BuildContext context) => ProductsProvider(),
-          update: (BuildContext context, ClientProvider clientProvider,
-              ProductsProvider productsProvider) {
-            productsProvider.dio = clientProvider.dio;
-            productsProvider.loadProducts(cat: "men");
-            return productsProvider;
-          },
-        )
-      ],
+    return injection(
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
@@ -45,7 +21,7 @@ class MyApp extends StatelessWidget {
           backgroundColor: Colors.white,
         ),
         home: Material(
-          child: ProductsListWidget(), //CategoriesListWidget(),
+          child: ProductListPage(), //CategoriesListWidget(),
         ),
       ),
     );
