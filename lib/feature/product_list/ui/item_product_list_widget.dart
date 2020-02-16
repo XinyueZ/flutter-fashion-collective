@@ -1,20 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_fashion_collective/domains/product.dart';
+import 'package:flutter_fashion_collective/feature/product_detail/entity/detail_entity.dart';
+import 'package:flutter_fashion_collective/feature/product_detail/ui/product_detail_page.dart';
+import 'package:flutter_fashion_collective/feature/product_list/entity/product_entity.dart';
+import 'package:flutter_fashion_collective/utils/hero_transition_widget.dart';
 
-import 'hero_transition_widget.dart';
-import 'product_detail_widget.dart';
+class ItemProductListWidget extends StatelessWidget {
+  const ItemProductListWidget({Key key, @required ProductEntity productEntity})
+      : assert(productEntity is ProductEntity),
+        _productEntity = productEntity,
+        super(key: key);
 
-class ItemProductListWidget extends StatefulWidget {
-  const ItemProductListWidget({Key key, this.product}) : super(key: key);
+  final ProductEntity _productEntity;
 
-  final Product product;
-  @override
-  _ItemProductListWidgetState createState() => _ItemProductListWidgetState();
-}
-
-class _ItemProductListWidgetState extends State<ItemProductListWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -26,12 +25,13 @@ class _ItemProductListWidgetState extends State<ItemProductListWidget> {
               HeroTransitionWidget(
                 width: 74.16,
                 height: 120,
-                tag: widget.product.thumbnail.toString(),
-                photo: widget.product.thumbnail.toString(),
+                tag: _productEntity.thumbnail.toString(),
+                photo: _productEntity.thumbnail.toString(),
                 onTap: () {
                   Navigator.of(context).push(
                       MaterialPageRoute<void>(builder: (BuildContext context) {
-                    return ProductDetailWidget(product: widget.product);
+                    return ProductDetailPage(
+                        detailEntity: DetailEntity(_productEntity.model));
                   }));
                 },
               ),
@@ -42,7 +42,7 @@ class _ItemProductListWidgetState extends State<ItemProductListWidget> {
                 child: Column(
                   children: <Widget>[
                     Text(
-                      widget.product.brandedName,
+                      _productEntity.title,
                       maxLines: 2,
                       style: Theme.of(context).textTheme.headline6,
                       overflow: TextOverflow.ellipsis,
@@ -52,7 +52,7 @@ class _ItemProductListWidgetState extends State<ItemProductListWidget> {
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          widget.product.seeMoreLabel,
+                          _productEntity.subtitle,
                           maxLines: 4,
                           style: Theme.of(context).textTheme.subtitle2,
                           overflow: TextOverflow.ellipsis,
@@ -65,7 +65,7 @@ class _ItemProductListWidgetState extends State<ItemProductListWidget> {
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            widget.product.priceLabel,
+                            _productEntity.price,
                             maxLines: 1,
                             style: Theme.of(context).textTheme.headline4,
                             overflow: TextOverflow.ellipsis,
@@ -73,7 +73,7 @@ class _ItemProductListWidgetState extends State<ItemProductListWidget> {
                         ),
                         Row(
                           children: <Widget>[
-                            if (widget.product.inStock)
+                            if (_productEntity.inStock)
                               Image.asset(
                                 'assets/icons/ic_in_stock.png',
                                 width: 25,
@@ -81,7 +81,7 @@ class _ItemProductListWidgetState extends State<ItemProductListWidget> {
                               )
                             else
                               Container(),
-                            if (widget.product.isPromotionalDeal)
+                            if (_productEntity.inPromotion)
                               Image.asset(
                                 'assets/icons/ic_promotional.png',
                                 width: 25,

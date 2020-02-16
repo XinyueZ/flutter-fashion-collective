@@ -1,31 +1,37 @@
-import 'dart:async';
-
-import 'package:dio/dio.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_fashion_collective/config.dart';
-import 'package:flutter_fashion_collective/domains/product.dart';
-import 'package:flutter_fashion_collective/domains/product_category.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter_fashion_collective/app_config/app_config.dart';
+import 'package:flutter_fashion_collective/model/product.dart';
+import 'package:flutter_fashion_collective/net/client.dart';
 import 'package:flutter_fashion_collective/utils/decoder_helper.dart';
 import 'package:sprintf/sprintf.dart';
 
-class ProductsProvider extends ChangeNotifier {
-  Dio dio;
+abstract class ProductDataSource {
+  Future<List<Product>> loadProductByCategoryName(
+      {@required String categoryName});
+}
 
-  final StreamController<List<Product>> _productsStreamController =
-      StreamController<List<Product>>();
+class ProductDataSourceImpl implements ProductDataSource {
+  ProductDataSourceImpl(
+      {@required Client client, @required AppConfig appConfig})
+      : assert(client is Client && appConfig is AppConfig),
+        _client = client,
+        _appConfig = appConfig;
 
-  Stream<List<Product>> get productsStream => _productsStreamController.stream;
+  final Client _client;
+  final AppConfig _appConfig;
 
-  int count = 0;
+  @override
+  Future<List<Product>> loadProductByCategoryName({String categoryName}) async {
+    assert(categoryName is String);
 
-  Future<void> loadProducts(
-      {ProductCategory productCategory, String cat}) async {
-    final String url = sprintf(
-        API_PRODUCT_WITH_CATEGORY, <String>[productCategory?.id ?? cat]);
-    final dynamic products = await dio?.get<dynamic>(url);
+    final String url =
+        sprintf(_appConfig.apiProductByCategory, <String>[categoryName]);
+
+    final dynamic product = await _client.get(url);
     final Map<String, dynamic> feedsMap = DecoderHelper.getJsonDecoder()
-        .convert(products.toString()) as Map<String, dynamic>;
+        .convert(product.toString()) as Map<String, dynamic>;
     final dynamic productsMap = feedsMap["products"];
+
     final List<Product> listOfProduct = productsMap.map<Product>((dynamic x) {
       final num id = x["id"] as num;
       final String brandedName = x["brandedName"].toString();
@@ -58,15 +64,6 @@ class ProductsProvider extends ChangeNotifier {
           isPromotionalDeal);
     }).toList() as List<Product>;
 
-    count = listOfProduct.length;
-    _productsStreamController.add(listOfProduct);
-
-    notifyListeners();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _productsStreamController.close();
+    return listOfProduct;
   }
 }
